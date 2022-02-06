@@ -14,16 +14,94 @@
     </Window.DataContext>
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
-    </Window.Resources>    
-    
-    <Grid>
-        <TextBox Margin="36,30" 
-                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" 
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top"
-                 HorizontalAlignment="Left"
-                 Width="300"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="243,141,0,0" VerticalAlignment="Top" Command="{Binding CloseApplicationCommand2}"/>
+    </Window.Resources>
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            
+            <ColumnDefinition Width="300" MinWidth="300"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="Работники">
+            <DockPanel>
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="-3,3">
+                    <Button   Foreground="Green" Padding="0,5" Margin="3,0"
+                            Command="{Binding CreateNewStudentCommand}"
+                            CommandParameter="{Binding SelectedGroup}" Content="Добавить"/>
+                    <Button  Foreground="Blue" Padding="0,5" Margin="3,0"
+                            Command="{Binding EditStudentCommand}"
+                            CommandParameter="{Binding SelectedStudent}" Content="Изменить"/>
+                    <Button  Foreground="Red" Padding="0,5" Margin="3,0"
+                            Command="{Binding EditStudentCommand}"
+                            CommandParameter="{Binding SelectedStudent}" Content="Удалить"/>
+                </UniformGrid>
+                <ListBox ItemsSource="{Binding SelectedGroup.Students}" SelectedItem="{Binding SelectedStudent}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="m:Student">
+                            <TextBlock>
+
+                                <TextBlock Text="{Binding Surname}"/>
+                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text="{Binding Patronymic}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="Информация" DataContext="{Binding SelectedStudent}">
+            <Grid Margin="3">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="Grid.Column" Value="0">
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                <Setter Property="Margin" Value="0,0,2,0"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                            <Trigger Property="Grid.Column" Value="1">
+                                <Setter Property="Margin" Value="2,0,0,0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Фамилия:"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Имя:"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Отчество:"/>
+                
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Дата рождения:"/>
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="Пол:"/>
+                <TextBlock Grid.Column="0" Grid.Row="5" Text="Наличие детей:"/>
+
+                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Surname}"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Name}"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}"/>
+                <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Birthday, StringFormat=dd.MM.yyyy}"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Sex}"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding HasChild}"/>
+
+            </Grid>
+        </GroupBox>
+        <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="3"/>
     </Grid>
+        
+        
 </Window>

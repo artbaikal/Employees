@@ -12,9 +12,11 @@ namespace Employees.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+
+
         #region Заголовок окна
 
-        private string _Title = "Работники";
+        private string _Title = "Управление работниками";
 
         /// <summary>Заголовок окна</summary>
         public string Title
