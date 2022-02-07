@@ -33,14 +33,14 @@
                             Command="{Binding CloseApplicationCommand2}"
                              Content="Обновить"/>
                     <Button   Foreground="Green" Padding="0,5" Margin="3,0"
-                            Command="{Binding CloseApplicationCommand2}"
+                            Command="{Binding AddEmployeeCommand}"
                              Content="Добавить"/>
                     <Button  Foreground="Blue" Padding="0,5" Margin="3,0"
                             Command="{Binding EditEmployeeCommand}"
                             CommandParameter="{Binding SelectedEmployee}" Content="Изменить"/>
                     <Button  Foreground="Red" Padding="0,5" Margin="3,0"
-                            Command="{Binding EditStudentCommand}"
-                            CommandParameter="{Binding SelectedStudent}" Content="Удалить"/>
+                            Command="{Binding DelEmployeeCommand}"
+                            CommandParameter="{Binding SelectedEmployee}" Content="Удалить"/>
                 </UniformGrid>
                 <ListBox ItemsSource="{Binding ListEmployees}" SelectedItem="{Binding SelectedEmployee}">
                     <ListBox.ItemContainerStyle>

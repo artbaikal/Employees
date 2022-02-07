@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -118,31 +119,140 @@ namespace Employees.ViewModels
 
 
 
+        #region AddEmployeeCommand - Команда добавления сотрудника
+
+        private ICommand _AddEmployeeCommand;
+
+        /// <summary>Команда редактирования студента</summary>
+        public ICommand AddEmployeeCommand => _AddEmployeeCommand ??= new LambdaCommand(OnAddEmployeeCommandExecuted, CanAddEmployeeCommandExecute);
+
+        private static bool CanAddEmployeeCommandExecute(object p) => true;
+
+        private void OnAddEmployeeCommandExecuted(object p)
+        {
+            var empl = new NotifyEmployee();
+
+            var dlg = new EditWindow
+            {
+
+      
+                Birthday = Convert.ToDateTime("01.01.2000"),
+ 
+
+
+            };
+
+            if (dlg.ShowDialog() == true)
+            {
+                bool messageAccepted = true;
+                if (messageAccepted)
+                {
+                    empl._surname = dlg.Surname;
+                    empl._name = dlg.EName;
+                    empl._patronymic = dlg.Patronymic;
+                    empl._birthday = dlg.Birthday;
+                    empl._sex = dlg.Sex;
+                    empl._hasChild = dlg.HasChild;
+
+                    ListEmployees.Add(empl);
+                }
+
+            }
+
+        }
+
+        #endregion
+
         #region EditEmployeeCommand - Команда редактирования сотрудника
 
         private ICommand _EditEmployeeCommand;
 
         /// <summary>Команда редактирования студента</summary>
-        public ICommand EditEmployeeCommand => _EditEmployeeCommand ??= new LambdaCommand(OnEmployeeCommandExecuted, CanEditEmployeeCommandExecute);
+        public ICommand EditEmployeeCommand => _EditEmployeeCommand ??= new LambdaCommand(OnEditEmployeeCommandExecuted, CanEditEmployeeCommandExecute);
 
         private static bool CanEditEmployeeCommandExecute(object p) => p is NotifyEmployee;
 
-        private void OnEmployeeCommandExecuted(object p)
+        private void OnEditEmployeeCommandExecuted(object p)
         {
             var empl = (NotifyEmployee)p;
 
             var dlg = new EditWindow
             {
-                
-                LastName = empl.Surname,
+
+                Surname = empl.Surname,
+                EName = empl.Name,
+                Patronymic = empl.Patronymic,
+                Birthday = empl.Birthday,
+                Sex = empl.Sex,
+                HasChild = empl.HasChild,
+           
+
 
             };
 
-
             if (dlg.ShowDialog() == true)
-                MessageBox.Show("Пользователь выполнил редактирование");
-            else
-                //MessageBox.Show("Пользователь отказался");
+            {
+                bool messageAccepted = true;
+                if(messageAccepted)
+                {
+                    empl._surname = dlg.Surname;
+                    empl._name = dlg.EName;
+                    empl._patronymic = dlg.Patronymic;
+                    empl._birthday = dlg.Birthday;
+                    empl._sex = dlg.Sex;
+                    empl._hasChild = dlg.HasChild;
+                }
+
+            }
+            //if (dlg.ShowDialog() == true)
+            //                MessageBox.Show("Пользователь выполнил редактирование");
+            //          else
+            //MessageBox.Show("Пользователь отказался");
+        }
+
+        #endregion
+
+        #region DelEmployeeCommand - Команда удаления сотрудника
+
+        private ICommand _DelEmployeeCommand;
+
+        /// <summary>Команда редактирования студента</summary>
+        public ICommand DelEmployeeCommand => _DelEmployeeCommand ??= new LambdaCommand(OnDelEmployeeCommandExecuted, CanDelEmployeeCommandExecute);
+
+        private static bool CanDelEmployeeCommandExecute(object p) => p is NotifyEmployee;
+
+        private void OnDelEmployeeCommandExecuted(object p)
+        {
+
+            if (!(p is NotifyEmployee )) return;
+            var empl = (NotifyEmployee)p;
+            var eml_index = ListEmployees.IndexOf(empl);
+
+            string messageBoxText = "Удалить выбранную запись сотрудника? ";
+            string caption = "Удаленее сотрудника";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
+            if(result== MessageBoxResult.Yes)
+            {
+                try
+                {
+                    ListEmployees.Remove(empl);
+                    if (eml_index < ListEmployees.Count)
+                        SelectedEmployee = ListEmployees[eml_index];
+                    else
+                    {
+                        SelectedEmployee = ListEmployees[eml_index-1];
+                    }
+                }
+                catch
+                {
+                }
+            }
+
         }
 
         #endregion

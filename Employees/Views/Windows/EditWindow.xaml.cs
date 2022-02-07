@@ -20,12 +20,12 @@ namespace Employees.Views.Windows
     /// </summary>
     public partial class EditWindow : Window
     {
-        #region LastName : string - Фамилия
+        #region Surname : string - Фамилия
 
         /// <summary>Фамилия</summary>
-        public static readonly DependencyProperty LastNameProperty =
+        public static readonly DependencyProperty SurnameProperty =
             DependencyProperty.Register(
-                nameof(LastName),
+                nameof(Surname),
                 typeof(string),
                 typeof(EditWindow),
                 new PropertyMetadata(default(string)));
@@ -33,13 +33,89 @@ namespace Employees.Views.Windows
         /// <summary>Фамилия</summary>
         //[Category("")]
         [Description("Фамилия")]
-        public string LastName { get => (string)GetValue(LastNameProperty); set => SetValue(LastNameProperty, value); }
+        public string Surname { get => (string)GetValue(SurnameProperty); set => SetValue(SurnameProperty, value); }
 
         #endregion
 
 
+        #region EName : string - Имя
+
+        /// <summary>Имя</summary>
+        public static readonly DependencyProperty ENameProperty =
+            DependencyProperty.Register(
+                nameof(EName),
+                typeof(string),
+                typeof(EditWindow),
+                new PropertyMetadata(default(string)));
+
+        /// <summary>Имя</summary>
+        //[Category("")]
+        [Description("Имя")]
+        public string EName { get => (string)GetValue(ENameProperty); set => SetValue(ENameProperty, value); }
+
+        #endregion
+
+        #region Patronymic
+
+        /// <summary>Patronymic</summary>
+        public static readonly DependencyProperty PatronymicProperty =
+            DependencyProperty.Register(
+                nameof(Patronymic),
+                typeof(string),
+                typeof(EditWindow),
+                new PropertyMetadata(default(string)));
 
 
+        public string Patronymic { get => (string)GetValue(PatronymicProperty); set => SetValue(PatronymicProperty, value); }
+
+        #endregion
+
+
+        #region Birthday
+
+        /// <summary>Birthday</summary>
+        public static readonly DependencyProperty BirthdayProperty =
+            DependencyProperty.Register(
+                nameof(Birthday),
+                typeof(DateTime),
+                typeof(EditWindow),
+                new PropertyMetadata(default(DateTime)));
+
+
+        public DateTime Birthday { get => (DateTime)GetValue(BirthdayProperty); set => SetValue(BirthdayProperty, value); }
+
+        #endregion
+
+        #region Sex
+
+        /// <summary>Sex</summary>
+        public static readonly DependencyProperty SexProperty =
+            DependencyProperty.Register(
+                nameof(Sex),
+                typeof(string),
+                typeof(EditWindow),
+                new PropertyMetadata(default(string)));
+
+
+        public string Sex { get => (string)GetValue(SexProperty); set => SetValue(SexProperty, value); }
+
+        #endregion
+
+
+        #region HasChild
+
+        /// <summary>Sex</summary>
+        public static readonly DependencyProperty HasChildProperty =
+            DependencyProperty.Register(
+                nameof(HasChild),
+                typeof(bool),
+                typeof(EditWindow),
+                new PropertyMetadata(default(bool)));
+
+
+        public bool HasChild { get => (bool)GetValue(HasChildProperty); set => SetValue(HasChildProperty, value); }
+
+        #endregion
 
         public EditWindow()
         {
