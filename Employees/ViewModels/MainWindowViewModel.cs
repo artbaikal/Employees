@@ -15,10 +15,12 @@ namespace Employees.ViewModels
     internal class MainWindowViewModel : ViewModel
     {
 
-        #region Список сотрудников ListEmployees
-        private ObservableCollection<Employee> _ListEmployees = new ObservableCollection<Employee>();
 
-        public ObservableCollection<Employee> ListEmployees { get => _ListEmployees; set => Set(ref _ListEmployees, value); }
+
+        #region Список сотрудников ListEmployees
+        private ObservableCollection<NotifyEmployee> _ListEmployees = new ObservableCollection<NotifyEmployee>();
+
+        public ObservableCollection<NotifyEmployee> ListEmployees { get => _ListEmployees; set => Set(ref _ListEmployees, value); }
 
         //ObservableCollection
         //private ObservableCollection<Employee> _ListEmployees;
@@ -32,10 +34,10 @@ namespace Employees.ViewModels
 
         #region SelectedEmployee : Employee - Выбранный сотрудник
         /// <summary>Выбранный студент</summary>
-        private Employee _SelectedEmployee;
+        private NotifyEmployee _SelectedEmployee;
 
         /// <summary>Выбранный студент</summary>
-        public Employee SelectedEmployee { get => _SelectedEmployee; set => Set(ref _SelectedEmployee, value); }
+        public NotifyEmployee SelectedEmployee { get => _SelectedEmployee; set => Set(ref _SelectedEmployee, value); }
 
         #endregion
 
@@ -93,8 +95,8 @@ namespace Employees.ViewModels
 
             //SelectedEmployee = tmp;
 
-            ListEmployees[0].Name = "gga "+DateTime.Now.ToString();
-            OnPropertyChanged(nameof(ListEmployees));
+            SelectedEmployee._surname = "gga "+DateTime.Now.ToString();
+            //OnPropertyChanged(nameof(ListEmployees));
         }
 
         #endregion
@@ -107,7 +109,8 @@ namespace Employees.ViewModels
             CloseApplicationCommand2 = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             #endregion
 
-            var tmp = new Employee();
+            var tmp = new NotifyEmployee();
+            //tmp.Id = 1;
             tmp.Id = 1;
             tmp.Name = "Иван";
             tmp.Surname = "Иванов";
@@ -120,7 +123,7 @@ namespace Employees.ViewModels
 
             SelectedEmployee = tmp;
 
-            tmp = new Employee();
+            tmp = new NotifyEmployee();
             tmp.Id = 2;
             tmp.Name = "Сергей";
             tmp.Surname = "Токарев";

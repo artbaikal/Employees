@@ -11,7 +11,7 @@ namespace Employees.ViewModels.Base
 
         protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
-            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
 
         }
 
