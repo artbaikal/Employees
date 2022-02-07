@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Employees.ViewModels"
         xmlns:cmd="clr-namespace:Employees.Infrastructure.Commands"
-        
+        xmlns:m="clr-namespace:Employees.Models"
         xmlns:l="clr-namespace:Employees"
         Title="{Binding Title}"
         Width="800" Height="450">
@@ -24,10 +24,11 @@
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Header="Работники">
             <DockPanel>
+        
                 <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="-3,3">
                     <Button   Foreground="Green" Padding="0,5" Margin="3,0"
-                            Command="{Binding CreateNewStudentCommand}"
-                            CommandParameter="{Binding SelectedGroup}" Content="Добавить"/>
+                            Command="{Binding CloseApplicationCommand2}"
+                             Content="Добавить"/>
                     <Button  Foreground="Blue" Padding="0,5" Margin="3,0"
                             Command="{Binding EditStudentCommand}"
                             CommandParameter="{Binding SelectedStudent}" Content="Изменить"/>
@@ -35,26 +36,28 @@
                             Command="{Binding EditStudentCommand}"
                             CommandParameter="{Binding SelectedStudent}" Content="Удалить"/>
                 </UniformGrid>
-                <ListBox ItemsSource="{Binding SelectedGroup.Students}" SelectedItem="{Binding SelectedStudent}">
+                <ListBox ItemsSource="{Binding ListEmployees}" SelectedItem="{Binding SelectedEmployee}">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                         </Style>
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="m:Student">
+                        <DataTemplate DataType="m:Employee">
                             <TextBlock>
 
                                 <TextBlock Text="{Binding Surname}"/>
                                 <TextBlock Text="{Binding Name}"/>
                                 <TextBlock Text="{Binding Patronymic}"/>
+                                <TextBlock Text=" ID="></TextBlock>
+                                <TextBlock Text="{Binding Id}"/>
                             </TextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </DockPanel>
         </GroupBox>
-        <GroupBox Grid.Column="1" Header="Информация" DataContext="{Binding SelectedStudent}">
+        <GroupBox Grid.Column="1" Header="Информация" DataContext="{Binding SelectedEmployee}">
             <Grid Margin="3">
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
@@ -95,8 +98,8 @@
                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Name}"/>
                 <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}"/>
                 <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Birthday, StringFormat=dd.MM.yyyy}"/>
-                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Sex}"/>
-                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding HasChild}"/>
+                <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Sex}"/>
+                <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding HasChild}"/>
 
             </Grid>
         </GroupBox>

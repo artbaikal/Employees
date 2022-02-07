@@ -18,6 +18,6 @@ namespace Employees.Models
 
         public string Sex { get; set; }
 
-        public string HasChild { get; set; }
+        public bool HasChild { get; set; }
     }
 }
