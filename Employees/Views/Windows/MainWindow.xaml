@@ -15,23 +15,29 @@
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
     </Window.Resources>
-
+    
     <Grid>
+      
         <Grid.ColumnDefinitions>
             
             <ColumnDefinition Width="300" MinWidth="300"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+       
+        
         <GroupBox Grid.Column="0" Header="Работники">
             <DockPanel>
         
                 <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="-3,3">
+                    <Button    Padding="0,5" Margin="3,0"
+                            Command="{Binding CloseApplicationCommand2}"
+                             Content="Обновить"/>
                     <Button   Foreground="Green" Padding="0,5" Margin="3,0"
                             Command="{Binding CloseApplicationCommand2}"
                              Content="Добавить"/>
                     <Button  Foreground="Blue" Padding="0,5" Margin="3,0"
-                            Command="{Binding EditStudentCommand}"
-                            CommandParameter="{Binding SelectedStudent}" Content="Изменить"/>
+                            Command="{Binding EditEmployeeCommand}"
+                            CommandParameter="{Binding SelectedEmployee}" Content="Изменить"/>
                     <Button  Foreground="Red" Padding="0,5" Margin="3,0"
                             Command="{Binding EditStudentCommand}"
                             CommandParameter="{Binding SelectedStudent}" Content="Удалить"/>
@@ -47,8 +53,8 @@
                             <TextBlock>
 
                                 <TextBlock Text="{Binding _surname}"/>
-                                <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text="{Binding Patronymic}"/>
+                                <TextBlock Text="{Binding _name}"/>
+                                <TextBlock Text="{Binding _patronymic}"/>
                                 <TextBlock Text=" ID="></TextBlock>
                                 <TextBlock Text="{Binding _id}"/>
                             </TextBlock>
@@ -95,16 +101,17 @@
                 <TextBlock Grid.Column="0" Grid.Row="5" Text="Наличие детей:"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding _surname}"/>
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Name}"/>
-                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}"/>
-                <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Birthday, StringFormat=dd.MM.yyyy}"/>
-                <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Sex}"/>
-                <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding HasChild}"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding _name}"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding _patronymic}"/>
+                <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding _birthday, StringFormat=dd.MM.yyyy}"/>
+                <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding _sex}"/>
+                <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding _hasChild}"/>
 
             </Grid>
         </GroupBox>
         <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="3"/>
     </Grid>
+    
         
         
 </Window>

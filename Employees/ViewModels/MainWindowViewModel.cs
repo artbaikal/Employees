@@ -7,7 +7,7 @@ using System.Windows.Input;
 using Employees.Infrastructure.Commands;
 using Employees.Models;
 using Employees.ViewModels.Base;
-
+using Employees.Views.Windows;
 
 namespace Employees.ViewModels
 
@@ -33,10 +33,10 @@ namespace Employees.ViewModels
         #endregion
 
         #region SelectedEmployee : Employee - Выбранный сотрудник
-        /// <summary>Выбранный студент</summary>
+        /// <summary>Выбранный сотрудник</summary>
         private NotifyEmployee _SelectedEmployee;
 
-        /// <summary>Выбранный студент</summary>
+        /// <summary>Выбранный сотрудник</summary>
         public NotifyEmployee SelectedEmployee { get => _SelectedEmployee; set => Set(ref _SelectedEmployee, value); }
 
         #endregion
@@ -62,6 +62,8 @@ namespace Employees.ViewModels
 
         #endregion
 
+
+        #region Команды 
 
         #region команда CloseApplicationCommand2
 
@@ -101,13 +103,60 @@ namespace Employees.ViewModels
 
         #endregion
 
+        #region команда Получения списка ListPersons
+
+        public ICommand ListPersonsCommand { get; }
+
+        private bool CanListPersonsCommandExecute(object p) => true;
+
+        private void OnListPersonsCommandExecuted(object p)
+        {
+           
+        }
+
+        #endregion
+
+
+
+        #region EditEmployeeCommand - Команда редактирования сотрудника
+
+        private ICommand _EditEmployeeCommand;
+
+        /// <summary>Команда редактирования студента</summary>
+        public ICommand EditEmployeeCommand => _EditEmployeeCommand ??= new LambdaCommand(OnEmployeeCommandExecuted, CanEditEmployeeCommandExecute);
+
+        private static bool CanEditEmployeeCommandExecute(object p) => p is NotifyEmployee;
+
+        private void OnEmployeeCommandExecuted(object p)
+        {
+            var empl = (NotifyEmployee)p;
+
+            var dlg = new EditWindow
+            {
+                
+                LastName = empl.Surname,
+
+            };
+
+
+            if (dlg.ShowDialog() == true)
+                MessageBox.Show("Пользователь выполнил редактирование");
+            else
+                //MessageBox.Show("Пользователь отказался");
+        }
+
+        #endregion
+
+        #endregion
+
         public MainWindowViewModel()
         {
 
-            //ListEmployees = new ObservableCollection<Employee>();
+            
             #region команды
             CloseApplicationCommand2 = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             #endregion
+
 
             var tmp = new NotifyEmployee();
             //tmp.Id = 1;
