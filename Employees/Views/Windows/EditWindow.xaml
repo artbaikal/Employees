@@ -56,7 +56,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                
+
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Column="0" Grid.Row="0" Text="Фамилия:"/>
@@ -71,10 +71,16 @@
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Surname}"/>
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding EName}"/>
             <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}"/>
-            
+
             <DatePicker Grid.Column="1" Grid.Row="3" Margin="3,2,0,2" SelectedDate="{Binding Birthday}"/>
-            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Sex}"/>
-            
+            <!--<TextBox Text="{Binding Sex}"/>-->
+            <!--<d:RadioButton Grid.Column="1" Grid.Row="4"   Content="М"  GroupName="1"  />-->
+
+            <StackPanel x:Name="stackPanel" Grid.Column="1" Grid.Row="4">
+                <RadioButton GroupName="g1" Content="М" IsChecked="{Binding sexMale}" />
+                <RadioButton GroupName="g1" Content="Ж" IsChecked="{Binding sexFemale}"/>
+
+            </StackPanel>
             <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding HasChild}"/>
 
 

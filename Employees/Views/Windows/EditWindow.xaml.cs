@@ -99,6 +99,28 @@ namespace Employees.Views.Windows
 
         public string Sex { get => (string)GetValue(SexProperty); set => SetValue(SexProperty, value); }
 
+
+        //sexMale sexFemale
+        public static readonly DependencyProperty SexPropertyMale =
+            DependencyProperty.Register(
+                nameof(sexMale),
+                typeof(bool),
+                typeof(EditWindow),
+                new PropertyMetadata(default(bool)));
+
+
+        public bool sexMale { get => (bool)GetValue(SexPropertyMale); set => SetValue(SexPropertyMale, value); }
+
+        public static readonly DependencyProperty SexPropertyFemale =
+               DependencyProperty.Register(
+                   nameof(sexFemale),
+                   typeof(bool),
+                   typeof(EditWindow),
+                   new PropertyMetadata(default(bool)));
+
+
+        public bool sexFemale { get => (bool)GetValue(SexPropertyFemale); set => SetValue(SexPropertyFemale, value); }
+
         #endregion
 
 

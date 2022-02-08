@@ -1,4 +1,4 @@
-﻿using Employees.Models;
+﻿
 using Grpc.Net.Client;
 using GrpcService1;
 using System;
@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 //using GrpcService1;
+using Model.Models;
 
 namespace Employees.Services.GRPC
 {
@@ -15,6 +16,57 @@ namespace Employees.Services.GRPC
     {
         const string connectAddr = "https://127.0.0.1:5001";
 
+        public static int DelEmployeeRequest(Employee empl)
+        {
+            try
+            {
+                var httpHandler = new HttpClientHandler();
+                httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+                using var channel = GrpcChannel.ForAddress(connectAddr, new GrpcChannelOptions { HttpHandler = httpHandler });
+
+                var client = new Persons.PersonsClient(channel);
+
+
+                var reply = client.DeletePerson(new PersonId() { Id = empl.Id });
+
+                return reply.Res;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        public static int EditEmployeeRequest(Employee empl)
+        {
+            try
+            {
+                var httpHandler = new HttpClientHandler();
+                httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+                using var channel = GrpcChannel.ForAddress(connectAddr, new GrpcChannelOptions { HttpHandler = httpHandler });
+
+                var client = new Persons.PersonsClient(channel);
+
+
+                var reply = client.EditPerson(new Person()
+                {
+                    Id = empl.Id,
+                    Fm = empl.Surname,
+                    Im = empl.Name,
+                    Ot = empl.Patronymic,
+                    Dtr = empl.Birthday.ToShortDateString(),
+                    Sex = empl.Sex,
+                    HasChilds = Convert.ToInt32(empl.HasChild)
+                }) ;
+
+                return reply.Res;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
         public static int AddNewEmployeeRequest(Employee empl)
         {
             try
