@@ -63,18 +63,19 @@ namespace Employees.ViewModels
 
 
         public NotifyEmployee()
-        { 
-        }
-            public NotifyEmployee(Employee tmp)
         {
-            Id = tmp.Id;
-            Name = tmp.Name;
-            Surname = tmp.Surname;
-            Patronymic=tmp.Patronymic;
-            Birthday = tmp.Birthday;
-            Sex=tmp.Sex;
-            HasChild=tmp.HasChild;
+        }
+        public NotifyEmployee(Employee e)
+        {
+            Id = e.Id;
+            Surname = e.Surname;
+            Name = e.Name;
+            Patronymic = e.Patronymic;
+            Birthday = e.Birthday;
+            Sex = e.Sex;
+            HasChild = e.HasChild;
 
         }
+
     }
 }

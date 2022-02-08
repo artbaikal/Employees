@@ -24,13 +24,7 @@ namespace Employees.ViewModels
 
         public ObservableCollection<NotifyEmployee> ListEmployees { get => _ListEmployees; set => Set(ref _ListEmployees, value); }
 
-        //ObservableCollection
-        //private ObservableCollection<Employee> _ListEmployees;
-        //public ObservableCollection<Employee> ListEmployees
-        //{
-        //    get { return _ListEmployees; }
-        //    set { _ListEmployees = value;}
-        //}
+
 
         #endregion
 
@@ -67,57 +61,56 @@ namespace Employees.ViewModels
 
         #region Команды 
 
-        #region команда CloseApplicationCommand2
 
-        public ICommand CloseApplicationCommand2 { get; }
 
-        private bool CanCloseApplicationCommandExecute(object p) => true;
+        #region команда Получения списка ListEmployees
 
-        private void OnCloseApplicationCommandExecuted(object p)
+
+
+        private ICommand _ListEmployeesCommand;
+
+        public ICommand ListEmployeesCommand => _ListEmployeesCommand ??= new LambdaCommand(OnListEmployeesCommandExecuted, CanListEmployeesCommandExecute);
+
+        private static bool CanListEmployeesCommandExecute(object p) => true;
+
+        async private void OnListEmployeesCommandExecuted(object p)
         {
-            //Application.Current.Shutdown();
-            //Title = DateTime.Now.ToString();
 
-            
-            var tmp = new Employee();
-            tmp.Id = 3;
-            tmp.Name = "Сергей";
-            tmp.Surname = "Ульянов";
-            tmp.Patronymic = "Петрович";
-            tmp.Birthday = DateTime.Now;
-            tmp.Sex = "М";
-            tmp.HasChild = false;
+            var empls = new List<Employee>();
+
+            try
+            {
+                await grpcClient.GetEmployees(empls);
+                ListEmployees.Clear();
+
+                foreach(var tmp in empls)
+                {
+                    var empl = new NotifyEmployee(tmp);
+                    
+                    ListEmployees.Add(empl);
+                }
+
+                if(ListEmployees.Count>0)
+                {
+                    SelectedEmployee = ListEmployees[0];
+                }
+                
+
+            }
+            catch
+            {
+                //if (!(p is Int32))
+                //{
+                    MessageBox.Show("Ошибка при получении списка с сервера");
+                //}
 
 
+            }
 
 
-            //ListEmployees.Add(tmp);
-
-            //OnPropertyChanged(nameof(ListEmployees));
-
-            //SelectedEmployee = ListEmployees[2];
-            //var ListEmployees2 = ListEmployees;
-            //ListEmployees = null;
-            //ListEmployees = ListEmployees2;
-
-            //SelectedEmployee = tmp;
-
-            SelectedEmployee._surname = "gga "+DateTime.Now.ToString();
-            //OnPropertyChanged(nameof(ListEmployees));
         }
 
-        #endregion
-
-        #region команда Получения списка ListPersons
-
-        public ICommand ListPersonsCommand { get; }
-
-        private bool CanListPersonsCommandExecute(object p) => true;
-
-        private void OnListPersonsCommandExecuted(object p)
-        {
-           
-        }
+        
 
         #endregion
 
@@ -127,7 +120,6 @@ namespace Employees.ViewModels
 
         private ICommand _AddEmployeeCommand;
 
-        /// <summary>Команда редактирования студента</summary>
         public ICommand AddEmployeeCommand => _AddEmployeeCommand ??= new LambdaCommand(OnAddEmployeeCommandExecuted, CanAddEmployeeCommandExecute);
 
         private static bool CanAddEmployeeCommandExecute(object p) => true;
@@ -148,21 +140,28 @@ namespace Employees.ViewModels
 
             if (dlg.ShowDialog() == true)
             {
-                bool messageAccepted = true;
-                if (messageAccepted)
+
+                empl.Surname = dlg.Surname;
+                empl.Name = dlg.EName;
+                empl.Patronymic = dlg.Patronymic;
+                empl.Birthday = dlg.Birthday;
+                empl.Sex = dlg.Sex;
+                empl.HasChild = dlg.HasChild;
+
+                var res = grpcClient.AddNewEmployeeRequest((Employee)empl);
+                if (res == -1)
                 {
-                    
-                    empl._surname = dlg.Surname;
-                    empl._name = dlg.EName;
-                    empl._patronymic = dlg.Patronymic;
-                    empl._birthday = dlg.Birthday;
-                    empl._sex = dlg.Sex;
-                    empl._hasChild = dlg.HasChild;
-
-                    grpcClient.AddNewPersonRequest((Employee)empl);
-
-                    ListEmployees.Add(empl);
+                    MessageBox.Show("Ошибка при отправке запроса на сервер. запись не добавлена");
                 }
+                else
+                {
+
+                    empl.Id = res;
+                    ListEmployees.Add(empl);
+
+                }
+
+
 
             }
 
@@ -174,7 +173,7 @@ namespace Employees.ViewModels
 
         private ICommand _EditEmployeeCommand;
 
-        /// <summary>Команда редактирования студента</summary>
+
         public ICommand EditEmployeeCommand => _EditEmployeeCommand ??= new LambdaCommand(OnEditEmployeeCommandExecuted, CanEditEmployeeCommandExecute);
 
         private static bool CanEditEmployeeCommandExecute(object p) => p is NotifyEmployee;
@@ -223,7 +222,7 @@ namespace Employees.ViewModels
 
         private ICommand _DelEmployeeCommand;
 
-        /// <summary>Команда редактирования студента</summary>
+
         public ICommand DelEmployeeCommand => _DelEmployeeCommand ??= new LambdaCommand(OnDelEmployeeCommandExecuted, CanDelEmployeeCommandExecute);
 
         private static bool CanDelEmployeeCommandExecute(object p) => p is NotifyEmployee;
@@ -269,36 +268,36 @@ namespace Employees.ViewModels
         public MainWindowViewModel()
         {
 
-            
-            #region команды
-            CloseApplicationCommand2 = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
-            #endregion
 
 
-            var tmp = new NotifyEmployee();
+
+
+            //var tmp = new NotifyEmployee();
+            ////tmp.Id = 1;
             //tmp.Id = 1;
-            tmp.Id = 1;
-            tmp.Name = "Иван";
-            tmp.Surname = "Иванов";
-            tmp.Patronymic = "Иванович";
-            tmp.Birthday = DateTime.Now;
-            tmp.Sex = "М";
-            tmp.HasChild = true;
+            //tmp.Name = "Иван";
+            //tmp.Surname = "Иванов";
+            //tmp.Patronymic = "Иванович";
+            //tmp.Birthday = DateTime.Now;
+            //tmp.Sex = "М";
+            //tmp.HasChild = true;
 
-            ListEmployees.Add(tmp);
+            //ListEmployees.Add(tmp);
 
-            SelectedEmployee = tmp;
+            //SelectedEmployee = tmp;
 
-            tmp = new NotifyEmployee();
-            tmp.Id = 2;
-            tmp.Name = "Сергей";
-            tmp.Surname = "Токарев";
-            tmp.Patronymic = "Петрович";
-            tmp.Birthday = DateTime.Now;
-            tmp.Sex = "М";
-            tmp.HasChild = false;
+            //tmp = new NotifyEmployee();
+            //tmp.Id = 2;
+            //tmp.Name = "Сергей";
+            //tmp.Surname = "Токарев";
+            //tmp.Patronymic = "Петрович";
+            //tmp.Birthday = DateTime.Now;
+            //tmp.Sex = "М";
+            //tmp.HasChild = false;
 
-            ListEmployees.Add(tmp);
+            //ListEmployees.Add(tmp);
+
+            OnListEmployeesCommandExecuted(1);
 
         }
     }

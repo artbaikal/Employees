@@ -8,7 +8,7 @@ package info;
 service Persons {
   
 
-  rpc AddNewPerson (Person) returns (Result);
+  rpc AddNewPerson (Person) returns (PersonId);
   rpc ListPersons (PersonId) returns (stream Person);
   rpc DeletePerson (PersonId) returns (Result);
   rpc EditPerson (Person) returns (Result);
@@ -24,7 +24,7 @@ message Person {
 	string ot=3;
 	
 	string dtr=4;
-	int32 sex=5;
+	string sex=5;
 	int32 HasChilds=6;
 	
 }
