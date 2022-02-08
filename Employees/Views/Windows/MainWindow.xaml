@@ -12,9 +12,7 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Window.Resources>
-        <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
-    </Window.Resources>
+
     
     <Grid>
       

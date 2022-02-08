@@ -7,13 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<Protobuf Include="Services\GRPC\protos\greet.proto" GrpcServices="Client"   />
+
     <PackageReference Include="Google.Protobuf" Version="3.19.4" />
     <PackageReference Include="Grpc.Net.Client" Version="2.42.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.43.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GrpcServiceProvider\GrpcServiceProvider.csproj" />
   </ItemGroup>
 
 </Project>

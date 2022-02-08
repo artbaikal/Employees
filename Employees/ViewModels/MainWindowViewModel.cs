@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using Employees.Infrastructure.Commands;
 using Employees.Models;
+using Employees.Services.GRPC;
 using Employees.ViewModels.Base;
 using Employees.Views.Windows;
 
@@ -87,6 +88,9 @@ namespace Employees.ViewModels
             tmp.Sex = "М";
             tmp.HasChild = false;
 
+
+
+
             //ListEmployees.Add(tmp);
 
             //OnPropertyChanged(nameof(ListEmployees));
@@ -147,12 +151,15 @@ namespace Employees.ViewModels
                 bool messageAccepted = true;
                 if (messageAccepted)
                 {
+                    
                     empl._surname = dlg.Surname;
                     empl._name = dlg.EName;
                     empl._patronymic = dlg.Patronymic;
                     empl._birthday = dlg.Birthday;
                     empl._sex = dlg.Sex;
                     empl._hasChild = dlg.HasChild;
+
+                    grpcClient.AddNewPersonRequest((Employee)empl);
 
                     ListEmployees.Add(empl);
                 }

@@ -9,6 +9,7 @@ namespace Employees.ViewModels
 {
     internal class NotifyEmployee : Employee, INotifyPropertyChanged
     {
+
         public int _id
         {
             get { return Id; }
@@ -58,6 +59,22 @@ namespace Employees.ViewModels
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+
+        public NotifyEmployee()
+        { 
+        }
+            public NotifyEmployee(Employee tmp)
+        {
+            Id = tmp.Id;
+            Name = tmp.Name;
+            Surname = tmp.Surname;
+            Patronymic=tmp.Patronymic;
+            Birthday = tmp.Birthday;
+            Sex=tmp.Sex;
+            HasChild=tmp.HasChild;
+
         }
     }
 }
