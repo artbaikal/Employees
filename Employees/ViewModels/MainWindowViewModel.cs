@@ -97,8 +97,9 @@ namespace Employees.ViewModels
                         ListEmployees.Add(tmp);
                 }
 
+                bool firstrun = ((p is Int32)) && (int)p == -1;
 
-                if (!(p is Int32))
+                if (!(p is Int32)||firstrun)
 
                 {
 
@@ -107,7 +108,7 @@ namespace Employees.ViewModels
                         SelectedEmployee = ListEmployees[0];
                     }
                 }
-                
+
 
             }
             catch
@@ -143,8 +144,14 @@ namespace Employees.ViewModels
 
             var dlg = new EditWindow
             {
+                Surname = "",
+                EName = "",
+                Patronymic = "",
+                
+                HasChild = false,
 
-      
+
+
                 Birthday = Convert.ToDateTime("01.01.2000"),
                 sexMale=true,
  
@@ -279,11 +286,11 @@ namespace Employees.ViewModels
             {
                 try
                 {
-
+                    
                     var res = grpcClient.DelEmployeeRequest((Employee)empl);
                     if (res == -1)
                     {
-                        MessageBox.Show("Ошибка при отправке запроса на сервер. запись не обновлена");
+                        MessageBox.Show("Ошибка при отправке запроса на сервер. запись не удалена");
                     }
 
                     else
@@ -317,7 +324,7 @@ namespace Employees.ViewModels
         public MainWindowViewModel()
         {
 
-            OnListEmployeesCommandExecuted(1);
+            OnListEmployeesCommandExecuted(-1);
 
         }
     }

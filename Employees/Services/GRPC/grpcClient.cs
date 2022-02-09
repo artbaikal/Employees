@@ -16,6 +16,8 @@ namespace Employees.Services.GRPC
     {
         const string connectAddr = "https://127.0.0.1:5001";
 
+        
+
         public static int DelEmployeeRequest(Employee empl)
         {
             try

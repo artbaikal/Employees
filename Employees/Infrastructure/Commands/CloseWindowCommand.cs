@@ -41,7 +41,8 @@ namespace Employees.Infrastructure.Commands
                 //    MessageBox.Show("Неверно заполнено поле пол - значение может быть М или Ж");
                 //    return;
                 //}
-                if (tmp.EName==""||tmp.Surname=="")
+                
+                if (tmp.EName==""||tmp.Surname == "")
                 {
                     MessageBox.Show("Имя или Фамилия не могут быть пустыми");
                     return;
