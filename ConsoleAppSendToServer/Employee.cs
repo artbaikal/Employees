@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Employees.Models
+namespace Model.Models
 {
-    internal class Employee
+    public  class Employee
     {
         public int Id { get; set; }
 

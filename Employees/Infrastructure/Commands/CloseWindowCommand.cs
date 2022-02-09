@@ -36,12 +36,13 @@ namespace Employees.Infrastructure.Commands
             if (window.DataContext is Employees.Views.Windows.EditWindow && DialogResult==true)
             {
                 Employees.Views.Windows.EditWindow tmp = (Employees.Views.Windows.EditWindow)window;
-                if (tmp.Sex!="М"&& tmp.Sex != "Ж")
-                {
-                    MessageBox.Show("Неверно заполнено поле пол - значение может быть М или Ж");
-                    return;
-                }
-                if (tmp.EName==""||tmp.Surname=="")
+                //if (tmp.Sex!="М"&& tmp.Sex != "Ж")
+                //{
+                //    MessageBox.Show("Неверно заполнено поле пол - значение может быть М или Ж");
+                //    return;
+                //}
+                
+                if (tmp.EName==""||tmp.Surname == "")
                 {
                     MessageBox.Show("Имя или Фамилия не могут быть пустыми");
                     return;
