@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using Model.Models;
+using System;
 
 namespace GrpcService1.DB
 {
@@ -10,6 +11,8 @@ namespace GrpcService1.DB
         {
             //Database.EnsureDeleted();
             Database.EnsureCreated();
+
+
             //Database.Migrate();
         }
 

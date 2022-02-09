@@ -1,6 +1,7 @@
 ﻿using Grpc.Net.Client;
 using GrpcService1;
 using GrpcService1.DB;
+using Model.Models;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -14,8 +15,8 @@ namespace ConsoleAppSendToServer
 
         static async Task Main(string[] args)
         {
-            Console.WriteLine("sending to server AddOrEditPerson");
 
+            Console.WriteLine("sending to server AddOrEditPerson");
 
 
             var httpHandler = new HttpClientHandler();
@@ -27,9 +28,33 @@ namespace ConsoleAppSendToServer
 
             using var dbase = new Context();
 
+            var empls = dbase.Employees.ToList();
+
+
+            if (empls.Count == 0)
+            {
+
+                for (int i = 0; i < 10; i++)
+                {
+                    var empl = new Employee();
+                    empl.Surname = "SurnameImport" + i;
+                    empl.Name = "NameImport" + i;
+                    empl.Patronymic = "PatronymicImport" + i;
+                    empl.Birthday = Convert.ToDateTime("01.01.2000");
+                    empl.Birthday = empl.Birthday.AddYears(i);
+                    empl.Sex = "Ж";
+                    empl.HasChild = false;
+                    dbase.Add(empl);
+
+                }
+
+                dbase.SaveChanges();
+            }
+
+            empls = dbase.Employees.ToList();
             using var call = client.AddOrEditPerson();
 
-            var empls = dbase.Employees.ToList();
+
             foreach (var empl in empls)
             {
                 var p = new Person();
